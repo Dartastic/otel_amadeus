@@ -1,13 +1,13 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the Apache License, Version 2.0
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_amadeus_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_amadeus';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AmadeusResult {
   const AmadeusResult({
@@ -131,7 +131,7 @@ Future<T> tracedAmadeus<T>({
   final span = _tracer().startSpan(
     'amadeus $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
@@ -139,103 +139,103 @@ Future<T> tracedAmadeus<T>({
       final res = r.result!;
       final extras = <Attribute<Object>>[];
       if (res.environment != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.environment',
           res.environment!,
         ));
       }
       if (res.product != null) {
-        extras.add(OTel.attributeString('amadeus.product', res.product!));
+        extras.add(OTelAPI.attributeString('amadeus.product', res.product!));
       }
       if (res.endpoint != null) {
-        extras.add(OTel.attributeString('amadeus.endpoint', res.endpoint!));
+        extras.add(OTelAPI.attributeString('amadeus.endpoint', res.endpoint!));
       }
       if (res.origin != null) {
-        extras.add(OTel.attributeString('amadeus.origin', res.origin!));
+        extras.add(OTelAPI.attributeString('amadeus.origin', res.origin!));
       }
       if (res.destination != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.destination',
           res.destination!,
         ));
       }
       if (res.departureDate != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.departure_date',
           res.departureDate!,
         ));
       }
       if (res.returnDate != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.return_date',
           res.returnDate!,
         ));
       }
       if (res.travelers != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'amadeus.travelers',
           res.travelers!,
         ));
       }
       if (res.cabin != null) {
-        extras.add(OTel.attributeString('amadeus.cabin', res.cabin!));
+        extras.add(OTelAPI.attributeString('amadeus.cabin', res.cabin!));
       }
       if (res.currency != null) {
-        extras.add(OTel.attributeString('amadeus.currency', res.currency!));
+        extras.add(OTelAPI.attributeString('amadeus.currency', res.currency!));
       }
       if (res.offerCount != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'amadeus.offer.count',
           res.offerCount!,
         ));
       }
       if (res.lowestPriceMicros != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'amadeus.lowest_price.micros',
           res.lowestPriceMicros!,
         ));
       }
       if (res.cityCode != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.city_code',
           res.cityCode!,
         ));
       }
       if (res.hotelId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.hotel.id',
           res.hotelId!,
         ));
       }
       if (res.checkInDate != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.check_in_date',
           res.checkInDate!,
         ));
       }
       if (res.checkOutDate != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.check_out_date',
           res.checkOutDate!,
         ));
       }
       if (res.roomQuantity != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'amadeus.room_quantity',
           res.roomQuantity!,
         ));
       }
       if (res.pnr != null) {
-        extras.add(OTel.attributeString('amadeus.pnr', res.pnr!));
+        extras.add(OTelAPI.attributeString('amadeus.pnr', res.pnr!));
       }
       if (res.bookingId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.booking.id',
           res.bookingId!,
         ));
       }
       if (res.bookingStatus != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.booking.status',
           res.bookingStatus!,
         ));
@@ -248,26 +248,26 @@ Future<T> tracedAmadeus<T>({
         }
       }
       if (res.ticketingTime != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.ticketing.time',
           res.ticketingTime!,
         ));
       }
       if (res.errorCode != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.error.code',
           res.errorCode!,
         ));
         span.setStatus(SpanStatusCode.Error, 'Amadeus ${res.errorCode}');
       }
       if (res.errorTitle != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'amadeus.error.title',
           res.errorTitle!,
         ));
       }
       if (res.statusCode != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'http.response.status_code',
           res.statusCode!,
         ));
@@ -278,13 +278,13 @@ Future<T> tracedAmadeus<T>({
           );
         }
       }
-      if (extras.isNotEmpty) span.addAttributes(OTel.attributes(extras));
+      if (extras.isNotEmpty) span.addAttributes(OTelAPI.attributes(extras));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
