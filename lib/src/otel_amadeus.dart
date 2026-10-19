@@ -10,6 +10,7 @@ const _tracerName = 'dartastic_otel_libs_amadeus';
 APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AmadeusResult {
+  /// Creates a result.
   const AmadeusResult({
     this.environment,
     this.product,
@@ -95,8 +96,13 @@ class AmadeusResult {
   final int? statusCode;
 }
 
+/// What a traced call returned: the value for the caller plus fields
+/// recorded on the span.
 class AmadeusCallResult<T> {
+  /// Creates a call result.
   const AmadeusCallResult({required this.value, this.result});
+
+  /// The value returned to the caller.
   final T value;
   final AmadeusResult? result;
 }
